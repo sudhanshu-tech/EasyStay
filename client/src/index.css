@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #4a90e2;
+  --color-secondary: #50e3c2;
+  --color-accent: #f5a623;
+  --color-background: #f4f4f4;
+}
+
+* {
+  font-family: "Roboto", sans-serif;
+}
+
+html,
+body {
+  background-color: white;
+}
+.font1{
+   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: 900;
+}
+.content {
+  padding-left: 5%;
+  padding-right: 5%;
+
+  margin: 0 auto;
+}
+
+.container {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+@media (max-width:1200px) {
+  .content {
+    padding-left: 10%;
+    padding-right: 10%;
+  }
+
+}
