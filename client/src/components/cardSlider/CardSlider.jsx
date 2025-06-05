@@ -4,12 +4,14 @@ import hotel from '../../assets/hotelImg.png';
 import room from '../../assets/roomImg2.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 
 const images = [hotel, room, hotel, room, hotel, room, hotel, room, hotel, room];
 
 export default function CardSlider() {
   const [current, setCurrent] = useState(0);
   const containerRef = useRef(null);
+  const navigate = useNavigate();
 
   const cardsPerView = () => {
     if (window.innerWidth >= 1024) return 4;
@@ -77,7 +79,9 @@ export default function CardSlider() {
                   </div>
                   <h2 className="text-lg font-semibold text-gray-800">Sudhanshu</h2>
                   <p className="text-gray-600">$300</p>
-                  <button className="mt-4 w-full bg-blue-600 text-white py-2 rounded hover:bg-red-500 transition-colors">
+                  <button className="mt-4 w-full bg-blue-600 text-white py-2 rounded hover:bg-red-500 transition-colors"
+                  onClick={() => navigate('/checkAvailability')}
+                  >
                     Book Now
                   </button>
                 </div>

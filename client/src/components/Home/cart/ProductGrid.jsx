@@ -3,6 +3,7 @@ import { FaCartPlus } from 'react-icons/fa';
 import hotel from '../../../assets/hotelImg.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 
 const products = Array.from({ length: 16 }, (_, i) => ({
     id: i + 1,
@@ -12,6 +13,7 @@ const products = Array.from({ length: 16 }, (_, i) => ({
 }));
 
 const ProductGrid = () => {
+    const navigate = useNavigate();
     return (
         <div className="min-h-screen bg-gray-100 p-6 max-w-[1200px] mx-auto px-4 mt-[10%]">
             <h1 className="text-3xl font-bold text-center mb-8 text-gray-800">Our Living Rooms and Suites</h1>
@@ -40,8 +42,8 @@ const ProductGrid = () => {
                             <p className="text-gray-600">${product.price}</p>
                             <button
                                 className="mt-4 flex items-center justify-center w-full bg-blue-600 text-white py-2 rounded hover:bg-red-500 transition-colors"
-                            >
-                               
+                                onClick={()=>navigate('/checkAvailability')}
+                            >     
                                 Book Now
                             </button>
                         </div>

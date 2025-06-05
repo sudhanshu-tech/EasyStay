@@ -12,6 +12,22 @@ const images = [img1, img2, img1, img2, img1, img2, img1, img2, img1, img2, img1
 const CheckAvailability = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [showBidModal, setShowBidModal] = useState(false);
+
+    const originalPrice = 3412;
+    const initialBid = 1987;
+
+    const [bidAmount, setBidAmount] = useState(initialBid);
+    const [discount, setDiscount] = useState(
+        (((originalPrice - initialBid) / originalPrice) * 100).toFixed(2)
+    );
+
+    const handleSliderChange = (e) => {
+        const value = parseInt(e.target.value, 10);
+        setBidAmount(value);
+        const newDiscount = (((originalPrice - value) / originalPrice) * 100).toFixed(2);
+        setDiscount(newDiscount);
+    };
 
     const openModal = (index) => {
         setCurrentIndex(index);
@@ -20,6 +36,8 @@ const CheckAvailability = () => {
     const closeModal = () => {
         setIsOpen(false);
     }
+    const openBidModal = () => setShowBidModal(true);
+    const closeBidModal = () => setShowBidModal(false);
 
     const nextImage = () => {
         setCurrentIndex((prev) => (prev + 1) % images.length);
@@ -48,7 +66,7 @@ const CheckAvailability = () => {
                     <div className="flex flex-col lg:flex-row gap-6">
                         {/* Left: Images */}
                         <div className="w-full lg:w-[55%] bg-white p-4 rounded-lg shadow-lg">
-                            <div className="flex flex-col md:flex-row gap-4">                              
+                            <div className="flex flex-col md:flex-row gap-4">
                                 <div className="flex-1">
                                     <img
                                         src={images[0]}
@@ -159,11 +177,56 @@ const CheckAvailability = () => {
 
                             {/* Buttons */}
                             <div className="flex flex-col sm:flex-row gap-4">
-                                <button className="flex-1 bg-purple-800 text-white py-2 rounded-md font-semibold">Bid Now</button>
+                                <button className="flex-1 bg-purple-800 text-white py-2 rounded-md font-semibold" onClick={openBidModal}>Bid Now</button>
                                 <button className="flex-1 border border-purple-800 text-purple-800 py-2 rounded-md font-semibold">Book Now</button>
                             </div>
                         </div>
                     </div>
+
+                    {/* Bid Modal */}
+                    {showBidModal && (
+                        <div className="fixed inset-0 bg-black/70 bg-opacity-50 flex justify-center items-center z-50">
+                            <div className="bg-white rounded-lg w-[480px] shadow-lg p-6 relative">
+                                <h2 className="text-xl font-bold text-blue-900 mb-4">Make Your Bid Here!</h2>
+
+                                <div className="bg-purple-50 p-4 rounded mb-4">
+                                    <p className="font-semibold">You’re Bidding For</p>
+                                    <ul className="list-disc list-inside text-sm mt-2 text-gray-700">
+                                        <li>Hotel soho lite, Noida</li>
+                                        <li>5 June 2025 - 6 June 2025</li>
+                                        <li>CLASSIC ROOM</li>
+                                    </ul>
+                                </div>
+
+                                <div className="bg-purple-200 text-center text-sm py-2 mb-4 rounded text-gray-700">
+                                    You won’t pay anything until you accept the deal!
+                                </div>
+
+                                <div className="flex flex-col items-center mb-4">
+                                    <div className="flex items-center space-x-4 mb-3">
+                                        <span className="line-through text-gray-500 text-xl">₹{originalPrice}</span>
+                                        <div className="bg-white border rounded px-4 py-2 shadow text-2xl font-semibold">₹{bidAmount}</div>
+                                        <span className="text-green-600 font-semibold text-lg">{discount}% OFF</span>
+                                    </div>
+
+                                    <input
+                                        type="range"
+                                        min={Math.floor(originalPrice * 0.8)}
+                                        max={originalPrice}
+                                        value={bidAmount}
+                                        onChange={handleSliderChange}
+                                        className="w-full accent-green-600"
+                                    />
+                                    <p className="text-green-600 mt-2 font-medium">Very good offer - let the hotel decide.</p>
+                                </div>
+
+                                <div className="flex justify-between mt-6">
+                                    <button onClick={closeBidModal} className="px-6 py-2 border border-blue-900 text-blue-900 font-semibold rounded">Close</button>
+                                    <button onClick={() => alert(`Bid placed: ₹${bidAmount}`)} className="bg-blue-900 text-white font-semibold px-6 py-2 rounded shadow">Place Bid</button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
 
                     <div className="max-w-7xl mx-auto p-4 space-y-6">
 
